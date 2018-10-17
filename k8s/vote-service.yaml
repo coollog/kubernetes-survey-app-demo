@@ -1,0 +1,45 @@
+# AUTO-GENERATED
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: vote-service
+  name: vote-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: vote-service
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: vote-service
+    spec:
+      containers:
+      - image: gcr.io/qingyangc-sandbox/codeone-vote
+        name: vote-service
+        ports:
+        - containerPort: 8081
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: vote-service
+  name: vote-service
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8081
+  selector:
+    run: vote-service
+  type: ClusterIP
+status:
+  loadBalancer: {}

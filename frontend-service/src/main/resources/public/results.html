@@ -1,0 +1,184 @@
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: #E6D8AF;
+  }
+  html, body, table {
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    /*font-weight: bold;*/
+  }
+  templates {
+    display: none;
+  }
+  #disconnected {
+    display: none;
+  }
+  #banner {
+    margin: 50px auto;
+    text-align: center;
+  }
+  #results table {
+    margin: 50px auto;
+  }
+  #results td {
+    padding: 20px;
+  }
+  #results td.name {
+    text-align: right;
+  }
+  #results td.name, #results td.count {
+    width: 300px;
+  }
+  #results td.barCol {
+    min-width: 200px;
+  }
+  #results tr, #results td {
+    height: 100px;
+  }
+
+  #results td div.bar {
+    height: 100%;
+    transition: all 0.5s ease-in-out;
+    width: 0px;
+  }
+  #results tbody:nth-of-type(1) td div.bar {
+    background: #27495C;
+  }
+  #results tbody:nth-of-type(2) td div.bar {
+    background: #83B2BD;
+  }
+  #results tbody:nth-of-type(3) td div.bar {
+    background: #44B0A0;
+  }
+  #results tbody:nth-of-type(4) td div.bar {
+    background: #3780A8;
+  }
+  #results tbody:nth-of-type(5) td div.bar {
+    background: #8F8D2E;
+  }
+  #results tbody:nth-of-type(6) td div.bar {
+    background: #693739;
+  }
+</style>
+
+<script>
+  class Votes {
+
+    constructor(newRowHandler, updateRowHandler, barSizeSetter) {
+      this._votes = {
+        'Skaffold': 0,
+        'Jib': 0,
+        'Knative': 0,
+        'App Engine': 0,
+        // '': 0,
+        'None of the above': 0,
+      };
+      this._updateRowHandler = updateRowHandler;
+      for (const name in this._votes) {
+        newRowHandler(name, this._votes[name]);
+      }
+      this._barSizeSetter = barSizeSetter;
+    }
+
+    update(newVotes) {
+      for (const name in newVotes) {
+        if (!this._votes.hasOwnProperty(name)) {
+          continue;
+        }
+        const count = +newVotes[name];
+        this._updateRowHandler(name, count);
+        this._votes[name] = count;
+      }
+
+      let max = 10;
+      for (const name in this._votes) {
+        if (this._votes[name] > max) {
+          max = this._votes[name];
+        }
+      }
+      for (const name in this._votes) {
+        if (max === 0) {
+          this._barSizeSetter(name, 0);
+          continue;
+        }
+        this._barSizeSetter(name, this._votes[name] / max);
+      }
+    }
+  }
+
+  class ResultsTable {
+
+    constructor() {
+      this._resolveTemplates();
+      this._votes = new Votes(this._handleNewRow.bind(this), this._handleUpdateRow.bind(this), this._setBarSize.bind(this));
+    }
+
+    update(newVotes) {
+      this._votes.update(newVotes);
+    }
+
+    _resolveTemplates() {
+      const rowTemplate = document.querySelector('template[name=resultsRow]');
+      this._rowTemplate = rowTemplate.innerHTML;
+    }
+
+    _handleNewRow(name, count) {
+      const resultsTable = document.querySelector('#results table');
+      resultsTable.innerHTML += this._makeRow(name, count);
+    }
+
+    _handleUpdateRow(name, count) {
+      const countCell = document.querySelector('#results tr[name="' + name + '"] td.count');
+      countCell.innerHTML = +count;
+    }
+
+    _setBarSize(name, barSize) {
+      const bar = document.querySelector('#results tr[name="' + name + '"] td div.bar');
+      bar.style.width = (barSize * 400) + "px";
+    }
+
+    _makeRow(name, count) {
+      return this._rowTemplate
+        .replace(/{name}/g, name)
+        .replace(/{count}/g, +count);
+    }
+  }
+</script>
+
+<templates>
+  <template name="resultsRow">
+    <tr name="{name}">
+      <td class="name">{name}</td>
+      <td class="barCol">
+        <div class="bar"></div>
+      </td>
+      <td class="count">{count}</td>
+    </tr>
+  </template>
+</templates>
+
+<div id="disconnected">CANNOT CONNECT</div>
+<div id="results">
+  <div id="banner">Cast your votes at <b>skaffold-code.one</b>!</div>
+  <table>
+
+  </table>
+</div>
+
+<script>
+  const resultsTable = new ResultsTable();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js"></script>
+<script>
+  const socket = io('/', { path: '/subscribe/socket.io' });
+  socket.on('update', (votes) => {
+    console.log('Got votes: ' + JSON.stringify(votes));
+    resultsTable.update(votes);
+  });
+  socket.on('connect_failed', () => {
+    document.querySelector('#disconnected').style.display = 'block';
+  });
+</script>

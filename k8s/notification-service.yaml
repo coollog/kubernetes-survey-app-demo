@@ -1,0 +1,45 @@
+# AUTO-GENERATED
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: notification-service
+  name: notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: notification-service
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: notification-service
+    spec:
+      containers:
+      - image: gcr.io/qingyangc-sandbox/codeone-notification
+        name: notification-service
+        ports:
+        - containerPort: 3000
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: notification-service
+  name: notification-service
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    run: notification-service
+  type: ClusterIP
+status:
+  loadBalancer: {}

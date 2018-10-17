@@ -1,0 +1,10 @@
+setup_environment.sh
+100m
+500m
+target
+.idea
+settings.xml
+build
+.gradle
+*.iml
+out/

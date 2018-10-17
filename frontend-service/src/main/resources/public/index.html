@@ -1,0 +1,122 @@
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+</head>
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 40px;
+    background: #E6D8AF;
+  }
+  #options {
+    text-align: center;
+    margin: 0 auto;
+  }
+  #options .option {
+    background: #D8E0FF;
+    cursor: pointer;
+  }
+  #options .option.selected {
+    background: #BFCBFF;
+  }
+
+  #options div {
+    padding: 30px 60px;
+  }
+  #question span {
+    font-weight: bold;
+    line-height: 1.5em;
+    max-width: 800px;
+  }
+
+  #submit {
+    background: #B4D0C9;
+    cursor: pointer;
+  }
+  #submit:hover {
+    background: #C7E5DE;
+  }
+  #submit:active {
+    background: #B1CCC5;
+  }
+  #submit.loading {
+    color: #333;
+    background: #C4D0CD;
+  }
+
+  #middle {
+    display: none;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+  }
+  #thanks {
+    display: table-cell;
+    vertical-align: middle;
+  }
+</style>
+
+<div id="options">
+  <div id="question">
+    <span>Which of these technologies do you use?</span>
+  </div>
+  <div class="option">Skaffold</div>
+  <div class="option">Jib</div>
+  <div class="option">Knative</div>
+  <div class="option">App Engine</div>
+  <!--<div class="option"></div>-->
+  <div class="option">None of the above</div>
+  <div id="submit">Submit</div>
+</div>
+
+<div id="middle">
+  <div id="thanks">
+    Thanks for voting!
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.option').forEach((el) => el.addEventListener('click', () => {
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected');
+    } else {
+      el.classList.add('selected');
+    }
+  }));
+
+  document.querySelector('#submit').addEventListener('click', () => {
+    if (document.querySelector('#submit').classList.contains('loading')) return;
+
+    const url = '/vote';
+
+    const votes = {};
+    document.querySelectorAll('.option').forEach((el) => {
+      if (el.classList.contains('selected')) {
+        votes[el.innerHTML] = 1;
+      }
+    });
+
+    document.querySelector('#submit').classList.add('loading');
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(votes),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+    }).then((response) => {
+      document.querySelector('#submit').classList.remove('loading');
+      console.log(response);
+      if (response.ok) {
+        document.querySelector('#options').style.display = 'none';
+        document.querySelector('#middle').style.display = 'table';
+      } else {
+        alert('Error:' + response.statusText);
+      }
+    });
+  });
+</script>
