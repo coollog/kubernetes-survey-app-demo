@@ -1,12 +1,6 @@
 micronaut:
   application:
     name: frontend-service
-  router:
-    static-resources:
-      default:
-        enabled: true
-        paths:
-        - classpath:public
   server:
     netty:
       file:
