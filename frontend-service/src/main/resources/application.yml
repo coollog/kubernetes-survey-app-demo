@@ -7,3 +7,7 @@ micronaut:
         enabled: true
         paths:
         - classpath:public
+  server:
+    netty:
+      file:
+        cacheSeconds: 0
