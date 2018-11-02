@@ -1,4 +1,4 @@
-FROM gcr.io/k8s-skaffold/nodemon
+FROM node:10-alpine
 CMD ["nodemon","--legacy-watch", "server.js"]
 COPY package*.json ./
 RUN npm install
