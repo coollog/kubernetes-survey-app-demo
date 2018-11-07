@@ -6,9 +6,9 @@ FRONTEND_SERVICE_YAML=frontend-service.yaml
 VOTE_SERVICE_YAML=vote-service.yaml
 NOTIFICATION_SERVICE_YAML=notification-service.yaml
 
-FRONTEND_SERVICE_IMAGE=gcr.io/qingyangc-sandbox/codeone-frontend
-VOTE_SERVICE_IMAGE=gcr.io/qingyangc-sandbox/codeone-vote
-NOTIFICATION_SERVICE_IMAGE=gcr.io/qingyangc-sandbox/codeone-notification
+FRONTEND_SERVICE_IMAGE=registry-intl.cn-shanghai.aliyuncs.com/coollog/frontend-service
+VOTE_SERVICE_IMAGE=registry-intl.cn-shanghai.aliyuncs.com/coollog/vote-service
+NOTIFICATION_SERVICE_IMAGE=registry-intl.cn-shanghai.aliyuncs.com/coollog/notification-service
 
 # Generates the deployment for the frontend-service, exposing port 8080 (HTTP).
 echo "# AUTO-GENERATED" > ${FRONTEND_SERVICE_YAML}
