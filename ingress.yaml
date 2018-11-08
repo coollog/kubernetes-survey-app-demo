@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/service-weight: ''
+  creationTimestamp: '2018-11-08T01:25:20Z'
+  generation: 6
+  name: web
+  namespace: default
+  resourceVersion: '22180'
+  selfLink: /apis/extensions/v1beta1/namespaces/default/ingresses/web
+  uid: 28469d64-e2f5-11e8-ad1c-00163e088710
+spec:
+  rules:
+    - host: skaffold-code.one
+      http:
+        paths:
+          - backend:
+              serviceName: frontend-service
+              servicePort: 80
+            path: /
+    - host: skaffold-code.one
+      http:
+        paths:
+          - backend:
+              serviceName: vote-service
+              servicePort: 80
+            path: /vote
+    - host: skaffold-code.one
+      http:
+        paths:
+          - backend:
+              serviceName: notification-service
+              servicePort: 80
+            path: /subscribe/
+status:
+  loadBalancer:
+    ingress:
+      - ip: 
+
