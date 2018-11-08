@@ -8,3 +8,5 @@ build
 .gradle
 *.iml
 out/
+external_ip.sh
+
