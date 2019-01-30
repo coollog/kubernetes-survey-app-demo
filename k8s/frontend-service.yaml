@@ -19,7 +19,7 @@ spec:
         run: frontend-service
     spec:
       containers:
-      - image: gcr.io/qingyangc-sandbox/codeone-frontend
+      - image: gcr.io/qingyangc-sandbox/frontend-service
         name: frontend-service
         ports:
         - containerPort: 8080

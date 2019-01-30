@@ -19,7 +19,7 @@ spec:
         run: vote-service
     spec:
       containers:
-      - image: gcr.io/qingyangc-sandbox/codeone-vote
+      - image: gcr.io/qingyangc-sandbox/vote-service
         name: vote-service
         ports:
         - containerPort: 8081

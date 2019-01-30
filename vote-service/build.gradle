@@ -1,10 +1,9 @@
 plugins {
-  id 'application'
   id 'java'
   id 'eclipse'
   id 'io.spring.dependency-management' version '1.0.6.RELEASE'
   id 'org.springframework.boot' version '2.0.5.RELEASE'
-  id 'com.google.cloud.tools.jib' version '0.9.12'
+  id 'com.google.cloud.tools.jib' version '1.0.0'
 }
 
 group = 'vote'
@@ -19,5 +18,3 @@ dependencies {
   implementation('org.springframework.boot:spring-boot-starter-web')
   testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
-
-mainClassName = 'vote.Application'

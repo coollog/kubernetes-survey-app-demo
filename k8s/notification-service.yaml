@@ -19,7 +19,7 @@ spec:
         run: notification-service
     spec:
       containers:
-      - image: gcr.io/qingyangc-sandbox/codeone-notification
+      - image: gcr.io/qingyangc-sandbox/notification-service
         name: notification-service
         ports:
         - containerPort: 3000

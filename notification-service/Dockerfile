@@ -1,5 +1,5 @@
-FROM gcr.io/k8s-skaffold/nodemon
-CMD ["nodemon","--legacy-watch", "server.js"]
+FROM node:10-alpine
+CMD ["node", "server.js"]
 COPY package*.json ./
 RUN npm install
 COPY *.js .

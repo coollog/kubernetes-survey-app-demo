@@ -1,12 +1,12 @@
-apiVersion: skaffold/v1alpha4
+apiVersion: skaffold/v1beta4
 kind: Config
 build:
   artifacts:
-  - image: gcr.io/qingyangc-sandbox/codeone-frontend
+  - image: gcr.io/qingyangc-sandbox/frontend-service
     jibGradle: {}
     context: frontend-service
-  - image: gcr.io/qingyangc-sandbox/codeone-vote
+  - image: gcr.io/qingyangc-sandbox/vote-service
     jibGradle: {}
     context: vote-service
-  - image: gcr.io/qingyangc-sandbox/codeone-notification
+  - image: gcr.io/qingyangc-sandbox/notification-service
     context: notification-service
