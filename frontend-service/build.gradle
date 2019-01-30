@@ -1,7 +1,7 @@
 plugins {
   id 'io.spring.dependency-management' version '1.0.6.RELEASE'
   id 'com.github.johnrengelman.shadow' version '4.0.0'
-  id 'com.google.cloud.tools.jib' version '0.9.12'
+  id 'com.google.cloud.tools.jib' version '1.0.0'
 }
 
 apply plugin:'application'

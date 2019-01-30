@@ -1,12 +1,12 @@
-apiVersion: skaffold/v1alpha4
+apiVersion: skaffold/v1beta4
 kind: Config
 build:
   artifacts:
-  - image: registry-intl.cn-shanghai.aliyuncs.com/coollog/frontend-service
+  - image: gcr.io/qingyangc-sandbox/frontend-service
     jibGradle: {}
     context: frontend-service
-  - image: registry-intl.cn-shanghai.aliyuncs.com/coollog/vote-service
+  - image: gcr.io/qingyangc-sandbox/vote-service
     jibGradle: {}
     context: vote-service
-  - image: registry-intl.cn-shanghai.aliyuncs.com/coollog/notification-service
+  - image: gcr.io/qingyangc-sandbox/notification-service
     context: notification-service
