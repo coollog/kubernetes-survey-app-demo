@@ -1,5 +1,4 @@
 plugins {
-  id 'application'
   id 'java'
   id 'eclipse'
   id 'io.spring.dependency-management' version '1.0.6.RELEASE'
@@ -19,7 +18,3 @@ dependencies {
   implementation('org.springframework.boot:spring-boot-starter-web')
   testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
-
-mainClassName = 'vote.Application'
-
-jib.from.image = 'openjdk:8-jre-alpine'
